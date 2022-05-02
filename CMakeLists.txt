@@ -23,3 +23,20 @@ include_directories(${CMAKE_CURRENT_SOURCE_DIR})
 
 # tests
 add_subdirectory(test)
+
+# install
+set_property(TARGET cdhlog PROPERTY PUBLIC_HEADER cdhlog.h)
+install(
+  TARGETS
+  cdhlog
+  PUBLIC_HEADER
+  RUNTIME
+  LIBRARY
+  ARCHIVE
+)
+install(
+  FILES
+  cmake/cdhlog-config.cmake
+  DESTINATION
+  ${CMAKE_INSTALL_PREFIX}/lib/cmake/cdhlog
+)
