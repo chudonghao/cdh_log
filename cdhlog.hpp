@@ -1,6 +1,6 @@
 #pragma once
 
-#include <boost/log/attributes/attribute_value_set.hpp>
+#include <boost/log/attributes/attribute_value_impl.hpp>
 #include <boost/log/core/core.hpp>
 #include <boost/log/core/record.hpp>
 #include <boost/log/sources/record_ostream.hpp>

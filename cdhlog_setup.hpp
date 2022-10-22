@@ -1,11 +1,11 @@
 #pragma once
 
+#include "cdhlog.hpp"
+
 #include <boost/log/core.hpp>
 #include <boost/log/sinks.hpp>
 #include <boost/log/utility/exception_handler.hpp>
 #include <boost/log/utility/setup.hpp>
-
-#include "cdhlog.hpp"
 
 namespace cdhlog {
 
