@@ -10,13 +10,11 @@ include_directories(${Boost_INCLUDE_DIRS})
 # cdhlog
 set(
   SRCS
-  cdhlog.cpp
-  cdhlog.h
-  ConsoleBackend.cpp
-  ConsoleBackend.h
+  cdhlog.hpp
+  cdhlog_setup.hpp
 )
-add_library(cdhlog SHARED ${SRCS})
-target_link_libraries(cdhlog PUBLIC Boost::log Boost::log_setup)
+add_library(cdhlog INTERFACE ${SRCS})
+target_link_libraries(cdhlog INTERFACE Boost::log Boost::log_setup)
 
 # for test
 include_directories(${CMAKE_CURRENT_SOURCE_DIR})
