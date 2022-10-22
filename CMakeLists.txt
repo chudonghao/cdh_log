@@ -4,7 +4,7 @@ project(cdhlog)
 set(CMAKE_CXX_STANDARD 17)
 
 # Boost
-find_package(Boost REQUIRED COMPONENTS log)
+find_package(Boost REQUIRED COMPONENTS log log_setup)
 include_directories(${Boost_INCLUDE_DIRS})
 
 # cdhlog
@@ -16,7 +16,7 @@ set(
   ConsoleBackend.h
 )
 add_library(cdhlog SHARED ${SRCS})
-target_link_libraries(cdhlog ${Boost_LIBRARIES})
+target_link_libraries(cdhlog PUBLIC Boost::log Boost::log_setup)
 
 # for test
 include_directories(${CMAKE_CURRENT_SOURCE_DIR})
