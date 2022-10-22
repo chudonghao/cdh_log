@@ -1,0 +1,9 @@
+
+@PACKAGE_INIT@
+
+if(NOT TARGET Boost::log OR NOT TARGET Boost::log_setup)
+  message(FATAL_ERROR "cdhlog requires Boost::log and Boost::log_setup")
+endif()
+
+
+include ("${CMAKE_CURRENT_LIST_DIR}/cdhlog-targets.cmake")

@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.21)
-project(cdhlog)
+project(cdhlog VERSION 1.0)
 
 set(CMAKE_CXX_STANDARD 17)
 
@@ -14,7 +14,9 @@ set(
   cdhlog_setup.hpp
 )
 add_library(cdhlog INTERFACE ${SRCS})
+target_include_directories(cdhlog INTERFACE $<INSTALL_INTERFACE:include>)
 target_link_libraries(cdhlog INTERFACE Boost::log Boost::log_setup)
+set_property(TARGET cdhlog PROPERTY PUBLIC_HEADER cdhlog.hpp cdhlog_setup.hpp)
 
 # for test
 include_directories(${CMAKE_CURRENT_SOURCE_DIR})
@@ -23,18 +25,32 @@ include_directories(${CMAKE_CURRENT_SOURCE_DIR})
 add_subdirectory(test)
 
 # install
-set_property(TARGET cdhlog PROPERTY PUBLIC_HEADER cdhlog.h)
 install(
-  TARGETS
-  cdhlog
-  PUBLIC_HEADER
-  RUNTIME
-  LIBRARY
-  ARCHIVE
+  TARGETS cdhlog
+  EXPORT cdhlog-targets
+  PUBLIC_HEADER DESTINATION include
 )
+
 install(
-  FILES
-  cmake/cdhlog-config.cmake
-  DESTINATION
-  ${CMAKE_INSTALL_PREFIX}/lib/cmake/cdhlog
+  EXPORT cdhlog-targets
+  FILE cdhlog-targets.cmake
+  DESTINATION lib/cmake/cdhlog
 )
+
+include(CMakePackageConfigHelpers)
+# generate the config file that is includes the exports
+configure_package_config_file(${CMAKE_CURRENT_SOURCE_DIR}/cmake/config.cmake.in
+  "${CMAKE_CURRENT_BINARY_DIR}/cdhlog-config.cmake"
+  INSTALL_DESTINATION "lib/cmake/cdhlog"
+  NO_SET_AND_CHECK_MACRO
+)
+write_basic_package_version_file(
+  "${CMAKE_CURRENT_BINARY_DIR}/cdhlog-config-version.cmake"
+  VERSION "${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}"
+  COMPATIBILITY AnyNewerVersion
+)
+install(FILES
+  ${CMAKE_CURRENT_BINARY_DIR}/cdhlog-config.cmake
+  ${CMAKE_CURRENT_BINARY_DIR}/cdhlog-config-version.cmake
+  DESTINATION lib/cmake/cdhlog
+  )
